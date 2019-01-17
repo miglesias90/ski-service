@@ -14,11 +14,11 @@ public class Serviceorder {
 
     private String customername;
 
-    private String customeremail;
+    //private String customeremail;
 
-    private String customerphone;
+    //private String customerphone;
 
-    private Priority priority;
+    /*private Priority priority;
 
     private Service service;
 
@@ -26,61 +26,29 @@ public class Serviceorder {
 
     private Date startdate;
 
-    private Date enddate;
+    private Date enddate;*/
 
-    public Serviceorder(String customername, String customeremail, String customerphone, Priority priority, Service service) {
+    public Serviceorder(String customername) {
         this.customername = customername;
-        this.customeremail = customeremail;
+        /*this.customeremail = customeremail;
         this.customerphone = customerphone;
         this.priority = priority;
-        this.service = service;
+        this.service = service;*/
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getCustomername() {
         return customername;
     }
 
-    public String getCustomeremail() {
-        return customeremail;
-    }
-
-    public String getCustomerphone() {
-        return customerphone;
-    }
-
-    public Priority getPriority() {
-        return priority;
-    }
-
-    public Service getService() {
-        return service;
-    }
-
-    public State getState() {
-        return state;
-    }
-
-    public Date getStartdate() {
-        return startdate;
-    }
-
-    public Date getEnddate() {
-        return enddate;
-    }
-
     public void setCustomername(String customername) {
         this.customername = customername;
-    }
-
-    public void setCustomeremail(String customeremail) {
-        this.customeremail = customeremail;
-    }
-
-    public void setCustomerphone(String customerphone) {
-        this.customerphone = customerphone;
-    }
-
-    public void setState(State state) {
-        this.state = state;
     }
 }
