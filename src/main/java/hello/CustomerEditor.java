@@ -27,13 +27,13 @@ public class CustomerEditor extends VerticalLayout implements KeyNotifier {
 	private final CustomerRepository repository;
 
 	/**
-	 * The currently edited customer
+	 * The currently edited serviceOrder
 	 */
-	private Customer customer;
+	private ServiceOrder serviceOrder;
 
-	/* Fields to edit properties in Customer entity */
-	TextField firstName = new TextField("First name");
-	TextField lastName = new TextField("Last name");
+	/* Fields to edit properties in ServiceOrder entity */
+	TextField customerName = new TextField("First name");
+	TextField customerEmail = new TextField("Last name");
 
 	/* Action buttons */
 	// TODO why more code?
@@ -42,14 +42,14 @@ public class CustomerEditor extends VerticalLayout implements KeyNotifier {
 	Button delete = new Button("Delete", VaadinIcon.TRASH.create());
 	HorizontalLayout actions = new HorizontalLayout(save, cancel, delete);
 
-	Binder<Customer> binder = new Binder<>(Customer.class);
+	Binder<ServiceOrder> binder = new Binder<>(ServiceOrder.class);
 	private ChangeHandler changeHandler;
 
 	@Autowired
 	public CustomerEditor(CustomerRepository repository) {
 		this.repository = repository;
 
-		add(firstName, lastName, actions);
+		add(customerName, customerEmail, actions);
 
 		// bind using naming convention
 		binder.bindInstanceFields(this);
@@ -65,17 +65,17 @@ public class CustomerEditor extends VerticalLayout implements KeyNotifier {
 		// wire action buttons to save, delete and reset
 		save.addClickListener(e -> save());
 		delete.addClickListener(e -> delete());
-		cancel.addClickListener(e -> editCustomer(customer));
+		cancel.addClickListener(e -> editCustomer(serviceOrder));
 		setVisible(false);
 	}
 
 	void delete() {
-		repository.delete(customer);
+		repository.delete(serviceOrder);
 		changeHandler.onChange();
 	}
 
 	void save() {
-		repository.save(customer);
+		repository.save(serviceOrder);
 		changeHandler.onChange();
 	}
 
@@ -83,7 +83,7 @@ public class CustomerEditor extends VerticalLayout implements KeyNotifier {
 		void onChange();
 	}
 
-	public final void editCustomer(Customer c) {
+	public final void editCustomer(ServiceOrder c) {
 		if (c == null) {
 			setVisible(false);
 			return;
@@ -91,22 +91,22 @@ public class CustomerEditor extends VerticalLayout implements KeyNotifier {
 		final boolean persisted = c.getId() != null;
 		if (persisted) {
 			// Find fresh entity for editing
-			customer = repository.findById(c.getId()).get();
+			serviceOrder = repository.findById(c.getId()).get();
 		}
 		else {
-			customer = c;
+			serviceOrder = c;
 		}
 		cancel.setVisible(persisted);
 
-		// Bind customer properties to similarly named fields
+		// Bind serviceOrder properties to similarly named fields
 		// Could also use annotation or "manual binding" or programmatically
 		// moving values from fields to entities before saving
-		binder.setBean(customer);
+		binder.setBean(serviceOrder);
 
 		setVisible(true);
 
 		// Focus first name initially
-		firstName.focus();
+		customerName.focus();
 	}
 
 	public void setChangeHandler(ChangeHandler h) {
