@@ -9,6 +9,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.sql.Date;
+
 @SpringBootApplication
 public class Application {
 
@@ -21,9 +23,9 @@ public class Application {
 	@Bean
 	public CommandLineRunner loadData(CustomerRepository repository) {
 		return (args) -> {
-			// save a couple of customers
-			repository.save(new ServiceOrder("Jack Bauer", "m@m.ch", "", Priority.ALWAYS));
-			repository.save(new ServiceOrder("Chloe Test", "t@t.ch",  "", Priority.ALWAYS));
+			// save a couple of customers7
+			java.util.Date date = new java.util.Date();
+			repository.save(new ServiceOrder("Miguel", "m@m.ch", "0000", "Tief", "PENDENT", "Kleiner Service", "", ""));
 
 			// fetch all customers
 			log.info("Customers found with findAll():");

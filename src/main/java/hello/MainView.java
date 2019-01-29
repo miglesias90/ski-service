@@ -15,7 +15,9 @@ public class MainView extends VerticalLayout {
 
 	private final CustomerRepository repo;
 
-	private final CustomerEditor editor;
+	private final CustomerEditor customerEditor;
+
+	private final CustomerCreator customerCreator;
 
 	final Grid<ServiceOrder> grid;
 
@@ -23,22 +25,24 @@ public class MainView extends VerticalLayout {
 
 	private final Button addNewBtn;
 
-	public MainView(CustomerRepository repo, CustomerEditor editor) {
+	public MainView(CustomerRepository repo, CustomerEditor customerEditor, CustomerCreator customerCreator) {
 		this.repo = repo;
-		this.editor = editor;
+		this.customerEditor = customerEditor;
+		this.customerCreator = customerCreator;
 		this.grid = new Grid<>(ServiceOrder.class);
 		this.filter = new TextField();
-		this.addNewBtn = new Button("New customer", VaadinIcon.PLUS.create());
+		this.addNewBtn = new Button("Neuer Auftrag", VaadinIcon.PLUS.create());
 
 		// build layout
 		HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn);
-		add(actions, grid, editor);
+		add(actions, grid, customerEditor, customerCreator);
 
 		grid.setHeight("300px");
-		grid.setColumns("id", "customerName", "customerEmail", "customerPhone", "priority");
+		grid.setColumns("id", "customerName", "customerEmail", "customerPhone", "priority", "status", "serviceType", "startDate", "endDate");
+
 		grid.getColumnByKey("id").setWidth("50px").setFlexGrow(0);
 
-		filter.setPlaceholder("Filter by last name");
+		filter.setPlaceholder("Name filtern");
 
 		// Hook logic to components
 
@@ -46,17 +50,23 @@ public class MainView extends VerticalLayout {
 		filter.setValueChangeMode(ValueChangeMode.EAGER);
 		filter.addValueChangeListener(e -> listCustomers(e.getValue()));
 
-		// Connect selected ServiceOrder to editor or hide if none is selected
+		// Connect selected ServiceOrder to customerEditor or hide if none is selected
 		grid.asSingleSelect().addValueChangeListener(e -> {
-			editor.editCustomer(e.getValue());
+			customerEditor.editCustomer(e.getValue());
 		});
 
 		// Instantiate and edit new ServiceOrder the new button is clicked
-		addNewBtn.addClickListener(e -> editor.editCustomer(new ServiceOrder("", "", "", null)));
+		addNewBtn.addClickListener(e -> customerCreator.createCustomer(new ServiceOrder()));
 
-		// Listen changes made by the editor, refresh data from backend
-		editor.setChangeHandler(() -> {
-			editor.setVisible(false);
+		// Listen changes made by the customerEditor and customerCreator, refresh data from backend
+		customerEditor.setChangeHandler(() -> {
+			customerEditor.setVisible(false);
+			listCustomers(filter.getValue());
+		});
+
+
+		customerCreator.setChangeHandler(() -> {
+			customerEditor.setVisible(false);
 			listCustomers(filter.getValue());
 		});
 

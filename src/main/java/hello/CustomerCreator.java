@@ -3,7 +3,7 @@ package hello;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.KeyNotifier;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -23,7 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 @SpringComponent
 @UIScope
-public class CustomerEditor extends VerticalLayout implements KeyNotifier {
+public class CustomerCreator extends VerticalLayout implements KeyNotifier {
 
 	private final CustomerRepository repository;
 
@@ -36,26 +36,29 @@ public class CustomerEditor extends VerticalLayout implements KeyNotifier {
 	TextField customerName = new TextField("Name");
 	TextField customerEmail = new TextField("Email");
 	TextField customerPhone = new TextField("Telefon");
+	TextField priority = new TextField("Priotität");
 	TextField status = new TextField("Status");
+	TextField serviceType = new TextField("Diensleitung");
+	TextField startDate = new TextField("Startdatum");
+    TextField endtDate = new TextField("Enddatum");
 
 
 	/* Action buttons */
 	// TODO why more code?
 	Button save = new Button("Save", VaadinIcon.CHECK.create());
 	Button cancel = new Button("Cancel");
-	Button delete = new Button("Delete", VaadinIcon.TRASH.create());
-	HorizontalLayout actions = new HorizontalLayout(save, cancel, delete);
+	HorizontalLayout actions = new HorizontalLayout(save, cancel);
 
 	Binder<ServiceOrder> binder = new Binder<>(ServiceOrder.class);
 	private ChangeHandler changeHandler;
 
 	@Autowired
-	public CustomerEditor(CustomerRepository repository) {
+	public CustomerCreator(CustomerRepository repository) {
 		this.repository = repository;
 
 
 
-		add(customerName, customerEmail, customerPhone, status, actions);
+		add(customerName, customerEmail, customerPhone, priority, status, serviceType, startDate, endtDate, actions);
 
 		// bind using naming convention
 		binder.bindInstanceFields(this);
@@ -64,21 +67,15 @@ public class CustomerEditor extends VerticalLayout implements KeyNotifier {
 		setSpacing(true);
 
 		save.getElement().getThemeList().add("primary");
-		delete.getElement().getThemeList().add("error");
 
 		addKeyPressListener(Key.ENTER, e -> save());
 
 		// wire action buttons to save, delete and reset
 		save.addClickListener(e -> save());
-		delete.addClickListener(e -> delete());
-		cancel.addClickListener(e -> editCustomer(serviceOrder));
+		cancel.addClickListener(e -> createCustomer(serviceOrder));
 		setVisible(false);
 	}
 
-	void delete() {
-		repository.delete(serviceOrder);
-		changeHandler.onChange();
-	}
 
 	void save() {
 		repository.save(serviceOrder);
@@ -89,7 +86,7 @@ public class CustomerEditor extends VerticalLayout implements KeyNotifier {
 		void onChange();
 	}
 
-	public final void editCustomer(ServiceOrder c) {
+	public final void createCustomer(ServiceOrder c) {
 		if (c == null) {
 			setVisible(false);
 			return;
