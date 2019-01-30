@@ -25,7 +25,7 @@ public class Application {
 		return (args) -> {
 			// save a couple of customers7
 			java.util.Date date = new java.util.Date();
-			repository.save(new ServiceOrder("Miguel", "m@m.ch", "0000", "Tief", "PENDENT", "Kleiner Service", "", ""));
+			//repository.save(new ServiceOrder("Miguel", "m@m.ch", "0000", "Tief", "PENDENT", "Kleiner Service", "", ""));
 
 			// fetch all customers
 			log.info("Customers found with findAll():");
@@ -36,10 +36,10 @@ public class Application {
 			log.info("");
 
 			// fetch an individual serviceOrder by ID
-			ServiceOrder serviceOrder = repository.findById(1L).get();
+			//ServiceOrder serviceOrder = repository.findById(1L).get();
 			log.info("ServiceOrder found with findOne(1L):");
 			log.info("--------------------------------");
-			log.info(serviceOrder.toString());
+			//log.info(serviceOrder.toString());
 			log.info("");
 
 			// fetch customers by last name

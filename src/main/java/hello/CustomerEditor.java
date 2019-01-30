@@ -36,7 +36,7 @@ public class CustomerEditor extends VerticalLayout implements KeyNotifier {
 	TextField customerName = new TextField("Name");
 	TextField customerEmail = new TextField("Email");
 	TextField customerPhone = new TextField("Telefon");
-	TextField status = new TextField("Status");
+	//TextField status = new TextField("Status");
 
 
 	/* Action buttons */
@@ -55,7 +55,7 @@ public class CustomerEditor extends VerticalLayout implements KeyNotifier {
 
 
 
-		add(customerName, customerEmail, customerPhone, status, actions);
+		add(customerName, customerEmail, customerPhone, actions);
 
 		// bind using naming convention
 		binder.bindInstanceFields(this);

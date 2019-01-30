@@ -1,123 +1,121 @@
 package hello;
 
-import javafx.scene.layout.Priority;
-
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.sql.Date;
 
 @Entity
+@Table(name = "vServiceAuftrag")
 public class ServiceOrder {
 
 	@Id
-	@GeneratedValue
 	private Long id;
 
-	private String customerName;
+	private String customername;
 
-	private String customerEmail;
+	private String customeremail;
 
-	private String customerPhone;
+	private String customerphone;
 
-	private String priority;
+	private String servicepriority;
 
-	private String status;
+	private String servicestate;
 
-	private String serviceType;
+	private String servicetype;
 
-	private String startDate;
+	private Date startdate;
 
-	private String endDate;
+	private Date enddate;
 
 
 
 	protected ServiceOrder() {
 	}
 
-    public ServiceOrder(String customerName, String customerEmail, String customerPhone, String priority, String status, String serviceType, String startDate, String endDate) {
-        this.customerName = customerName;
-        this.customerEmail = customerEmail;
-        this.customerPhone = customerPhone;
-        this.priority = priority;
-        this.status = status;
-        this.serviceType = serviceType;
-        this.startDate = startDate;
-        this.endDate = endDate;
+    public ServiceOrder(String customername, String customeremail, String customerphone, String servicepriority, String servicestate, String servicetype, Date startdate, Date enddate) {
+        this.customername = customername;
+        this.customeremail = customeremail;
+        this.customerphone = customerphone;
+        this.servicepriority = servicepriority;
+        this.servicestate = servicestate;
+        this.servicetype = servicetype;
+        this.startdate = startdate;
+        this.enddate = enddate;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public String getCustomername() {
+        return customername;
     }
 
-    public String getCustomerEmail() {
-        return customerEmail;
+    public String getCustomeremail() {
+        return customeremail;
     }
 
-    public String getCustomerPhone() {
-        return customerPhone;
+    public String getCustomerphone() {
+        return customerphone;
     }
 
-    public String getPriority() {
-        return priority;
+    public String getServicepriority() {
+        return servicepriority;
     }
 
-    public String getStatus() {
-        return status;
+    public String getServicestate() {
+        return servicestate;
     }
 
-    public String getServiceType() {
-        return serviceType;
+    public String getServicetype() {
+        return servicetype;
     }
 
-    public String getStartDate() {
-        return startDate;
+    public Date getStartdate() {
+        return startdate;
     }
 
-    public String getEndDate() {
-        return endDate;
+    public Date getEnddate() {
+        return enddate;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setCustomername(String customername) {
+        this.customername = customername;
     }
 
-    public void setCustomerEmail(String customerEmail) {
-        this.customerEmail = customerEmail;
+    public void setCustomeremail(String customeremail) {
+        this.customeremail = customeremail;
     }
 
-    public void setCustomerPhone(String customerPhone) {
-        this.customerPhone = customerPhone;
+    public void setCustomerphone(String customerphone) {
+        this.customerphone = customerphone;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setServicestate(String servicestate) {
+        this.servicestate = servicestate;
     }
 
-    public void setPriority(String priority) {
-        this.priority = priority;
+    public void setServicepriority(String servicepriority) {
+        this.servicepriority = servicepriority;
     }
 
-    public void setServiceType(String serviceType) {
-        this.serviceType = serviceType;
+    public void setServicetype(String servicetype) {
+        this.servicetype = servicetype;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
+    public void setStartdate(Date startdate) {
+        this.startdate = startdate;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    public void setEnddate(Date enddate) {
+        this.enddate = enddate;
     }
 
     @Override
 	public String toString() {
-		return String.format("ServiceOrder[id=%d, customerName='%s', customerEmail='%s']", id,
-				customerName, customerEmail);
+		return String.format("ServiceOrder[id=%d, customername='%s', customeremail='%s']", id,
+                customername, customeremail);
 	}
 
 }

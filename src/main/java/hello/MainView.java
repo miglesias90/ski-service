@@ -38,7 +38,7 @@ public class MainView extends VerticalLayout {
 		add(actions, grid, customerEditor, customerCreator);
 
 		grid.setHeight("300px");
-		grid.setColumns("id", "customerName", "customerEmail", "customerPhone", "priority", "status", "serviceType", "startDate", "endDate");
+		grid.setColumns("id", "customername", "customeremail", "customerphone", "servicepriority", "servicestate", "servicetype", "startdate", "enddate");
 
 		grid.getColumnByKey("id").setWidth("50px").setFlexGrow(0);
 

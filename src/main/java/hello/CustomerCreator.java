@@ -36,11 +36,6 @@ public class CustomerCreator extends VerticalLayout implements KeyNotifier {
 	TextField customerName = new TextField("Name");
 	TextField customerEmail = new TextField("Email");
 	TextField customerPhone = new TextField("Telefon");
-	TextField priority = new TextField("Priotität");
-	TextField status = new TextField("Status");
-	TextField serviceType = new TextField("Diensleitung");
-	TextField startDate = new TextField("Startdatum");
-    TextField endtDate = new TextField("Enddatum");
 
 
 	/* Action buttons */
@@ -58,7 +53,7 @@ public class CustomerCreator extends VerticalLayout implements KeyNotifier {
 
 
 
-		add(customerName, customerEmail, customerPhone, priority, status, serviceType, startDate, endtDate, actions);
+		add(customerName, customerEmail, customerPhone, actions);
 
 		// bind using naming convention
 		binder.bindInstanceFields(this);
