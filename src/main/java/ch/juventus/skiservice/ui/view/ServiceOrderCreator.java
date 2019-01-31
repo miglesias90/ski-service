@@ -1,7 +1,6 @@
 package ch.juventus.skiservice.ui.view;
 
-import ch.juventus.skiservice.data.ServiceOrder;
-import ch.juventus.skiservice.data.ServiceOrderRepository;
+import ch.juventus.skiservice.data.*;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.KeyNotifier;
 import com.vaadin.flow.component.button.Button;
@@ -14,6 +13,12 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * A simple example to introduce building forms. As your real application is probably much
@@ -28,6 +33,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class ServiceOrderCreator extends VerticalLayout implements KeyNotifier {
 
 	private final ServiceOrderRepository repository;
+	private final ServiceTypeRepository typeRepository;
+	private final ServicePriorityRepository priorityRepository;
 
 	/**
 	 * The currently edited serviceOrder
@@ -52,11 +59,25 @@ public class ServiceOrderCreator extends VerticalLayout implements KeyNotifier {
 	private ChangeHandler changeHandler;
 
 	@Autowired
-	public ServiceOrderCreator(ServiceOrderRepository repository) {
+	public ServiceOrderCreator(ServiceOrderRepository repository, ServiceTypeRepository typeRepository, ServicePriorityRepository priorityRepository) {
 		this.repository = repository;
+		this.typeRepository = typeRepository;
+		this.priorityRepository = priorityRepository;
 
-        serviceType.setItems("Kleiner Service", "Grosser Service","Rennski-Service","Bindung montieren und einstellen","Fell zuschneiden","Heisswachsen");
-        servicePriority.setItems("Tief", "Standard","Express");
+		ArrayList<String> priorities= new ArrayList<>();
+		Iterator priorityIt = priorityRepository.findAll().iterator();
+		while (priorityIt.hasNext()) {
+			priorities.add(((ServicePriority)priorityIt.next()).getServicepriority());
+		}
+
+		ArrayList<String> types= new ArrayList<>();
+		Iterator typeIt = typeRepository.findAll().iterator();
+		while (typeIt.hasNext()) {
+			types.add(((ServiceType)typeIt.next()).getServicetype());
+		}
+
+		servicePriority.setItems(priorities);
+        serviceType.setItems(types);
 		add(customerName, customerEmail, customerPhone, serviceType, servicePriority, actions);
 
 		// bind using naming convention

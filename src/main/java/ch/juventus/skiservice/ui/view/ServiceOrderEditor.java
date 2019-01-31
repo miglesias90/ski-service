@@ -2,6 +2,8 @@ package ch.juventus.skiservice.ui.view;
 
 import ch.juventus.skiservice.data.ServiceOrder;
 import ch.juventus.skiservice.data.ServiceOrderRepository;
+import ch.juventus.skiservice.data.ServiceState;
+import ch.juventus.skiservice.data.ServiceStateRepository;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.KeyNotifier;
 import com.vaadin.flow.component.button.Button;
@@ -15,11 +17,15 @@ import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 @SpringComponent
 @UIScope
 public class ServiceOrderEditor extends VerticalLayout implements KeyNotifier {
 
 	private final ServiceOrderRepository repository;
+	private final ServiceStateRepository stateRepository;
 
 	/**
 	 * The currently edited serviceOrder
@@ -41,10 +47,17 @@ public class ServiceOrderEditor extends VerticalLayout implements KeyNotifier {
 	private ChangeHandler changeHandler;
 
 	@Autowired
-	public ServiceOrderEditor(ServiceOrderRepository repository) {
+	public ServiceOrderEditor(ServiceOrderRepository repository, ServiceStateRepository stateRepository) {
 		this.repository = repository;
+		this.stateRepository = stateRepository;
 
-		status.setItems("PENDENT","ABGESCHLOSSEN");
+		ArrayList<String> states= new ArrayList<>();
+		Iterator stateIt = stateRepository.findAll().iterator();
+		while (stateIt.hasNext()) {
+			states.add(((ServiceState)stateIt.next()).getServicestate());
+		}
+
+		status.setItems(states);
 		add(customerName, customerEmail, customerPhone, status, actions);
 
 		// bind using naming convention

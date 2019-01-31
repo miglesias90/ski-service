@@ -18,9 +18,9 @@ public class ServiceOrder {
 
 	private String customerphone;
 
-	private String servicepriority;
+    private String servicestate;
 
-	private String servicestate;
+	private String servicepriority;
 
 	private String servicetype;
 

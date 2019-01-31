@@ -1,9 +1,8 @@
 package ch.juventus.skiservice.ui;
 
+import ch.juventus.skiservice.data.*;
 import ch.juventus.skiservice.ui.view.ServiceOrderCreator;
 import ch.juventus.skiservice.ui.view.ServiceOrderEditor;
-import ch.juventus.skiservice.data.ServiceOrder;
-import ch.juventus.skiservice.data.ServiceOrderRepository;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -18,6 +17,9 @@ import java.util.List;
 public class MainView extends VerticalLayout {
 
 	private final ServiceOrderRepository repo;
+	private final ServicePriorityRepository priorityRepo;
+	private final ServiceStateRepository stateRepo;
+	private final ServiceTypeRepository typeRepo;
 
 	private final ServiceOrderEditor serviceOrderEditor;
 
@@ -27,8 +29,11 @@ public class MainView extends VerticalLayout {
 
 	private final Button addNewBtn;
 
-	public MainView(ServiceOrderRepository repo, ServiceOrderEditor serviceOrderEditor, ServiceOrderCreator serviceOrderCreator) {
+	public MainView(ServiceOrderRepository repo, ServicePriorityRepository priorityRepo, ServiceStateRepository stateRepo, ServiceTypeRepository typeRepo, ServiceOrderEditor serviceOrderEditor, ServiceOrderCreator serviceOrderCreator) {
 		this.repo = repo;
+		this.priorityRepo = priorityRepo;
+		this.stateRepo = stateRepo;
+		this.typeRepo = typeRepo;
 		this.serviceOrderEditor = serviceOrderEditor;
 		this.serviceOrderCreator = serviceOrderCreator;
 		this.grid = new Grid<>();
