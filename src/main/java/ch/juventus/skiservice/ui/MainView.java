@@ -11,7 +11,6 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import org.springframework.util.StringUtils;
 
-import java.util.List;
 
 @Route
 public class MainView extends VerticalLayout {
@@ -68,27 +67,22 @@ public class MainView extends VerticalLayout {
 		// Listen changes made by the customerEditor and customerCreator, refresh data from backend
 		serviceOrderEditor.setChangeHandler(() -> {
 			serviceOrderEditor.setVisible(false);
+			listServiceOrders();
 		});
 
 
 		serviceOrderCreator.setChangeHandler(() -> {
 			serviceOrderEditor.setVisible(false);
+			listServiceOrders();
 		});
 
 		// Initialize listing
-		listServiceOrders(null);
+		listServiceOrders();
 	}
 
 
-	void listServiceOrders(String filterText) {
-		if (StringUtils.isEmpty(filterText)) {
-			grid.setItems(repo.findAll());
-			//grid.setColumns("id", "customername", "customeremail", "customerphone", "servicepriority", "servicestate", "servicetype", "startdate", "enddate");
-
-		}
-		else {
-			//grid.setItems(repo.findByLastNameStartsWithIgnoreCase(filterText));
-		}
+	void listServiceOrders() {
+		grid.setItems(repo.findAll());
 	}
 	// end::listCustomers[]
 

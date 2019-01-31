@@ -52,7 +52,7 @@ public class ServiceOrderEditor extends VerticalLayout implements KeyNotifier {
 		this.stateRepository = stateRepository;
 
 		ArrayList<String> states= new ArrayList<>();
-		Iterator stateIt = stateRepository.findAll().iterator();
+		Iterator stateIt = this.stateRepository.findAll().iterator();
 		while (stateIt.hasNext()) {
 			states.add(((ServiceState)stateIt.next()).getServicestate());
 		}
